@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="An educational webpage providing information about the FitnessGram Pacer Test, cardiovascular fitness, and student wellness, along with a safe video demonstration.">
+  <title>Your File is Ready — Please Continue</title>
+  <style>
+    :root{--bg:#0b1220;--card:#0f1724;--accent:#ffcc00}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;overflow:hidden}
+    body{
+      display:grid;place-items:center;
+      background:linear-gradient(180deg,#071021 0%,#0b1220 100%);
+      color:#e6eef8;
+      position:relative;
+    }
+    .bg-symbols{
+      position:fixed;inset:0;z-index:0;overflow:hidden;
+      font-size:48px;line-height:1.4;opacity:0.05;color:#fff;pointer-events:none;
+      user-select:none;text-align:center;white-space:pre-wrap;
+      word-break:break-word;font-family:monospace;
+    }
+    .card{
+      width:min(900px,94%);
+      background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border-radius:14px;
+      box-shadow:0 8px 28px rgba(2,6,23,0.7);
+      padding:28px;text-align:center;
+      position:relative;z-index:1;
+    }
+    h1{margin:0 0 8px;font-size:22px}
+    p{margin:0 0 18px;color:#c8d6ea}
+    .btn{appearance:none;border:0;background:var(--accent);color:#071021;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+    .sub{font-size:13px;color:#97a7c4}
+    .video-wrap{margin-top:18px;border-radius:12px;overflow:hidden;background:#000;height:0;padding-bottom:56.25%;position:relative}
+    iframe{position:absolute;inset:0;border:0;width:100%;height:100%}
+    footer{margin-top:16px;font-size:12px;color:#98a9c9}
+    .link-like{background:none;border:0;color:var(--accent);cursor:pointer;font-weight:700}
+    .profile-pic{width:120px;height:120px;border-radius:50%;object-fit:cover;box-shadow:0 0 12px rgba(0,0,0,0.4);margin-bottom:18px}
+    .credit{margin-top:22px;font-size:12px;color:#8fa6cc}
+
+    /* CAPTCHA styling */
+    #captcha-overlay{
+      display:none;
+      position:fixed; inset:0;
+      background:rgba(0,0,0,0.55);
+      backdrop-filter:blur(3px);
+      z-index:9999;
+      justify-content:center; align-items:center;
+    }
+    #captcha-box{
+      background:#121a2b;
+      padding:20px;
+      border-radius:12px;
+      width:340px;
+      text-align:center;
+      box-shadow:0 0 18px #000;
+    }
+    .captcha-img{
+      width:100%; height:90px;
+      object-fit:cover;
+      border-radius:6px;
+      cursor:pointer;
+      border:3px solid transparent;
+      transition:0.15s;
+    }
+    .captcha-img.selected{
+      border-color:#ffcc00;
+    }
+    @keyframes shake{
+      0%{transform:translateX(0);}
+      25%{transform:translateX(-6px);}
+      50%{transform:translateX(6px);}
+      75%{transform:translateX(-4px);}
+      100%{transform:translateX(0);}
+    }
+    .shake{ animation:shake 0.4s; }
+
+    /* small responsive adjustments */
+    @media (max-width:600px){
+      #captcha-box{width:92%;}
+      .captcha-img{height:70px;}
+      .profile-pic{width:96px;height:96px;}
+      .card{padding:18px;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-symbols" id="symbols"></div>
+
+<!-- CAPTCHA OVERLAY (centered popup) -->
+<div id="captcha-overlay">
+  <div id="captcha-box" role="dialog" aria-modal="true">
+    <h2 style="margin:0 0 10px;">🔒 Verification</h2>
+    <p style="font-size:14px; color:#d0d7e6;">
+      Select all images that contain <b>Rick Astley</b>
+    </p>
+
+    <div id="captcha-grid" style="
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:6px;
+      margin-top:12px;">
+    </div>
+
+    <button id="captcha-submit" style="
+      margin-top:14px;
+      padding:10px 15px;
+      border:0; background:#ffcc00;
+      color:#000; border-radius:8px;
+      font-weight:700; cursor:pointer;">
+      Verify
+    </button>
+  </div>
+</div>
+
+<div class="card" id="page">
+  <a href='https://postimg.cc/vxTQQLQW' target='_blank'>
+    <img src='https://i.postimg.cc/vxTQQLQW/image-2025-11-12-211424903.png' alt='Profile' class='profile-pic' />
+  </a>
+  <h1>✅ Your file is ready</h1>
+  <p class="sub">We prepared the file you requested. Click the button below to continue to your download.</p>
+
+  <div id="action-area">
+    <button class="btn" id="start-btn">Continue to Download</button>
+    <div style="margin-top:10px;" class="sub">Or <button class="link-like" id="skip-btn">skip and preview</button></div>
+  </div>
+
+  <div id="video-container" style="display:none">
+    <p style="margin-top:14px; color:#c8d6ea; text-align:center;">
+      The FitnessGram™ Pacer Test is a standardized aerobic capacity assessment used in schools to measure cardiovascular endurance.
+      It involves running back and forth across a designated distance in time with audio cues that gradually increase in speed.
+      The purpose of the test is to help students understand their aerobic fitness level and promote health education through structured physical activity.
+      It is designed as an educational fitness tool rather than a competitive challenge.
+    </p>
+
+    <p style="margin-top:10px; color:#c8d6ea; text-align:center;">
+      The test is widely recognized as an educational tool that supports physical education programs nationwide. By introducing students to goal-setting, pacing,
+      and healthy activity habits, it serves as a way for schools to teach long-term wellness principles. This additional context helps clarify the test’s purpose
+      and reinforces the importance of regular exercise as part of a balanced, healthy lifestyle.
+    </p>
+
+    <div class="video-wrap" id="video-wrap"></div>
+    <footer>Not what you expected? <button class="link-like" id="reset">Go back</button></footer>
+  </div>
+
+  <div class="credit">Site made by Leo Chi</div>
+</div>
+
+<script>
+/* ---------------------------
+   六七 BACKGROUND GENERATOR
+--------------------------- */
+const symbols = document.getElementById('symbols');
+const lines = 25;
+let pattern = '';
+for(let i=0;i<lines;i++){
+  let row = '';
+  for(let j=0;j<30;j++){
+    if(Math.random() < 0.15) row += '六';
+    else if(Math.random() < 0.3) row += '七';
+    else row += ' ';
+  }
+  pattern += row + "\n";
+}
+symbols.textContent = pattern;
+
+
+/* ---------------------------
+   RICKROLL VIDEO SYSTEM
+--------------------------- */
+const rickrollUrl = 'https://www.youtube-nocookie.com/embed/oHg5SJYRHA0';
+const startBtn = document.getElementById('start-btn');
+const skipBtn = document.getElementById('skip-btn');
+const videoContainer = document.getElementById('video-container');
+const videoWrap = document.getElementById('video-wrap');
+const actionArea = document.getElementById('action-area');
+const reset = document.getElementById('reset');
+
+function showVideo(autoplay){
+  actionArea.style.display = 'none';
+  videoContainer.style.display = '';
+  const src = `${rickrollUrl}?rel=0&modestbranding=1&playsinline=1${autoplay ? '&autoplay=1' : ''}`;
+  videoWrap.innerHTML = `<iframe src="${src}" title="Rickroll" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+}
+
+
+/* ---------------------------
+    RICK ASTLEY CAPTCHA
+--------------------------- */
+const captchaOverlay = document.getElementById("captcha-overlay");
+const captchaGrid = document.getElementById("captcha-grid");
+const captchaSubmit = document.getElementById("captcha-submit");
+
+const rickImage = "https://i.imgur.com/x0vCwQ2.jpeg"; // real Rick
+const decoys = [
+  "https://i.imgur.com/0v5S0Q9.jpeg",
+  "https://i.imgur.com/Zh8w0rM.jpeg",
+  "https://i.imgur.com/Uw2XUks.jpeg",
+  "https://i.imgur.com/kCJkNtB.jpeg",
+  "https://i.imgur.com/81HcCiq.jpeg",
+  "https://i.imgur.com/9YFttzU.jpeg",
+  "https://i.imgur.com/qQqzKnQ.jpeg",
+  "https://i.imgur.com/Yc3pY2B.jpeg"
+];
+
+function buildCaptcha(){
+  captchaGrid.innerHTML = "";
+  let imgs = [...decoys];
+  imgs.splice(Math.floor(Math.random()*9), 0, rickImage); // insert Rick randomly
+
+  imgs.slice(0,9).forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.className = "captcha-img";
+    img.onclick = () => img.classList.toggle("selected");
+    captchaGrid.appendChild(img);
+  });
+}
+
+function showCaptcha(){
+  buildCaptcha();
+  captchaOverlay.style.display = "flex";
+}
+
+captchaSubmit.onclick = () => {
+  const selected = [...document.querySelectorAll(".captcha-img.selected")];
+
+  if (selected.length === 1 && selected[0].src.includes("x0vCwQ2")) {
+    captchaOverlay.style.display = "none";
+    showVideo(true); // success → rickroll
+  } else {
+    const captchaBox = document.getElementById("captcha-box");
+    captchaBox.classList.add("shake");
+    setTimeout(() => captchaBox.classList.remove("shake"), 500);
+  }
+};
+
+
+/* ---------------------------
+    BUTTON HOOKS
+--------------------------- */
+startBtn.addEventListener('click', () => {
+  startBtn.disabled = true;
+  startBtn.textContent = 'Preparing...';
+
+  setTimeout(() => {
+    showCaptcha(); // CAPTCHA replaces direct rickroll
+  }, 600);
+});
+
+skipBtn.addEventListener('click', () => showVideo(false));
+
+reset.addEventListener('click', () => {
+  videoWrap.innerHTML = '';
+  videoContainer.style.display = 'none';
+  actionArea.style.display = '';
+  startBtn.disabled = false;
+  startBtn.textContent = 'Continue to Download';
+});
+
+startBtn.focus();
+
+
+/* ---------------------------
+    AUTO-RICKROLL REDIRECT
+--------------------------- */
+let redirectTimer = setTimeout(() => {
+  if (videoContainer.style.display === 'none') {
+    window.location.href = 'https://www.youtube.com/watch?v=oHg5SJYRHA0';
+  }
+}, 8000);
+
+['click','keydown','mousemove','touchstart'].forEach(evt =>
+  document.addEventListener(evt, () => clearTimeout(redirectTimer), {once:true})
+);
+</script>
+
+</body>
+</html>
