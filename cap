@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="An educational webpage providing information about the FitnessGram Pacer Test, cardiovascular fitness, and student wellness, along with a safe video demonstration.">
+  <title>Your File is Ready — Please Continue</title>
+  <style>
+    :root{--bg:#0b1220;--card:#0f1724;--accent:#ffcc00}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      overflow:hidden;
+    }
+    body{
+      display:grid;
+      place-items:center;
+      background:linear-gradient(180deg,#071021 0%,#0b1220 100%);
+      color:#e6eef8;
+      position:relative;
+      animation:fadeInBody 0.7s ease-out;
+    }
+
+    @keyframes fadeInBody{
+      from{opacity:0; transform:translateY(10px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    .bg-symbols{
+      position:fixed;inset:0;z-index:0;overflow:hidden;
+      font-size:48px;line-height:1.4;opacity:0.05;color:#fff;pointer-events:none;
+      user-select:none;text-align:center;white-space:pre-wrap;
+      word-break:break-word;font-family:monospace;
+    }
+    .card{
+      width:min(900px,94%);
+      background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border-radius:14px;
+      box-shadow:0 8px 28px rgba(2,6,23,0.7);
+      padding:28px;
+      text-align:center;
+      position:relative;
+      z-index:1;
+      animation:riseIn 0.7s ease-out;
+    }
+    @keyframes riseIn{
+      from{opacity:0; transform:translateY(12px) scale(0.98);}
+      to{opacity:1; transform:translateY(0) scale(1);}
+    }
+
+    h1{margin:0 0 8px;font-size:22px}
+    p{margin:0 0 18px;color:#c8d6ea}
+    .btn{
+      appearance:none;border:0;
+      background:var(--accent);color:#071021;
+      padding:12px 18px;border-radius:10px;
+      font-weight:700;cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+      transition:transform .15s,box-shadow .15s,background .15s;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 24px rgba(0,0,0,0.45);
+      background:#ffd733;
+    }
+    .btn:disabled{
+      opacity:0.7;
+      cursor:default;
+      transform:none;
+      box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    }
+    .sub{font-size:13px;color:#97a7c4}
+    .video-wrap{
+      margin-top:18px;
+      border-radius:12px;
+      overflow:hidden;
+      background:#000;
+      height:0;
+      padding-bottom:56.25%;
+      position:relative;
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    }
+    iframe{position:absolute;inset:0;border:0;width:100%;height:100%}
+    footer{margin-top:16px;font-size:12px;color:#98a9c9}
+    .link-like{
+      background:none;border:0;
+      color:var(--accent);
+      cursor:pointer;
+      font-weight:700;
+      padding:0;
+    }
+    .link-like:hover{text-decoration:underline}
+    .profile-pic{
+      width:120px;height:120px;
+      border-radius:50%;object-fit:cover;
+      box-shadow:0 0 12px rgba(0,0,0,0.4);
+      margin-bottom:18px;
+      transition:transform .18s;
+    }
+    .profile-pic:hover{
+      transform:rotate(-1deg) scale(1.03);
+    }
+    .credit{margin-top:22px;font-size:12px;color:#8fa6cc}
+
+    /* CAPTCHA styling */
+    #captcha-overlay{
+      display:none;
+      position:fixed; inset:0;
+      background:rgba(0,0,0,0.55);
+      backdrop-filter:blur(3px);
+      z-index:9999;
+      justify-content:center;
+      align-items:center;
+    }
+    #captcha-box{
+      background:#121a2b;
+      padding:20px;
+      border-radius:12px;
+      width:340px;
+      text-align:center;
+      box-shadow:0 0 18px #000;
+      animation:popIn .25s ease-out;
+    }
+    @keyframes popIn{
+      from{opacity:0; transform:scale(0.9) translateY(8px);}
+      to{opacity:1; transform:scale(1) translateY(0);}
+    }
+    .captcha-img{
+      width:100%; height:90px;
+      object-fit:cover;
+      border-radius:6px;
+      cursor:pointer;
+      border:3px solid transparent;
+      transition:0.15s;
+    }
+    .captcha-img:hover{
+      transform:translateY(-2px) scale(1.02);
+      box-shadow:0 4px 14px rgba(0,0,0,0.4);
+    }
+    .captcha-img.selected{
+      border-color:#ffcc00;
+      box-shadow:0 0 0 2px rgba(255,204,0,0.5);
+    }
+    @keyframes shake{
+      0%{transform:translateX(0);}
+      25%{transform:translateX(-6px);}
+      50%{transform:translateX(6px);}
+      75%{transform:translateX(-4px);}
+      100%{transform:translateX(0);}
+    }
+    .shake{ animation:shake 0.4s; }
+
+    /* fake verifying bar */
+    #captcha-status{
+      margin-top:10px;
+      font-size:12px;
+      color:#a9b8d8;
+      display:none;
+    }
+    #captcha-bar-wrap{
+      width:100%;
+      height:6px;
+      background:#1b2638;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:6px;
+    }
+    #captcha-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#ffcc00,#ffe680);
+      transition:width .25s linear;
+    }
+
+    /* small responsive adjustments */
+    @media (max-width:600px){
+      #captcha-box{width:92%;}
+      .captcha-img{height:70px;}
+      .profile-pic{width:96px;height:96px;}
+      .card{padding:18px;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-symbols" id="symbols"></div>
+
+<!-- CAPTCHA OVERLAY (centered popup) -->
+<div id="captcha-overlay">
+  <div id="captcha-box" role="dialog" aria-modal="true">
+    <h2 style="margin:0 0 10px;">🔒 Verification</h2>
+    <p style="font-size:14px; color:#d0d7e6;">
+      Pick all images that do <b>NOT</b> contain Leo Chi.
+    </p>
+
+    <div id="captcha-grid" style="
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:6px;
+      margin-top:12px;">
+    </div>
+
+    <button id="captcha-submit" class="btn" style="margin-top:14px;padding:10px 15px;">
+      Verify
+    </button>
+
+    <div id="captcha-status">
+      Verifying images...
+      <div id="captcha-bar-wrap">
+        <div id="captcha-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="page">
+  <a href="https://postimg.cc/vxTQQLQW" target="_blank">
+    <img src="https://i.postimg.cc/vxTQQLQW/image-2025-11-12-211424903.png" alt="Profile" class="profile-pic" />
+  </a>
+  <h1>✅ Your file is ready</h1>
+  <p class="sub">We prepared the file you requested. Click the button below to continue to your download.</p>
+
+  <div id="action-area">
+    <button class="btn" id="start-btn">Continue to Download</button>
+    <div style="margin-top:10px;" class="sub">Or <button class="link-like" id="skip-btn">skip and preview</button></div>
+  </div>
+
+  <div id="video-container" style="display:none">
+    <p style="margin-top:14px; color:#c8d6ea; text-align:center;">
+      The FitnessGram™ Pacer Test is a standardized aerobic capacity assessment used in schools to measure cardiovascular endurance.
+      It involves running back and forth across a designated distance in time with audio cues that gradually increase in speed.
+      The purpose of the test is to help students understand their aerobic fitness level and promote health education through structured physical activity.
+      It is designed as an educational fitness tool rather than a competitive challenge.
+    </p>
+
+    <p style="margin-top:10px; color:#c8d6ea; text-align:center;">
+      The test is widely recognized as an educational tool that supports physical education programs nationwide. By introducing students to goal-setting, pacing,
+      and healthy activity habits, it serves as a way for schools to teach long-term wellness principles. This additional context helps clarify the test’s purpose
+      and reinforces the importance of regular exercise as part of a balanced, healthy lifestyle.
+    </p>
+
+    <div class="video-wrap" id="video-wrap"></div>
+    <footer>Not what you expected? <button class="link-like" id="reset">Go back</button></footer>
+  </div>
+
+  <div class="credit">Site made by Leo Chi</div>
+</div>
+
+<script>
+/* ---------------------------
+   六七 BACKGROUND GENERATOR
+--------------------------- */
+const symbols = document.getElementById('symbols');
+const lines = 25;
+let pattern = '';
+for(let i=0;i<lines;i++){
+  let row = '';
+  for(let j=0;j<30;j++){
+    if(Math.random() < 0.15) row += '六';
+    else if(Math.random() < 0.3) row += '七';
+    else row += ' ';
+  }
+  pattern += row + "\\n";
+}
+symbols.textContent = pattern;
+
+
+/* ---------------------------
+   RICKROLL VIDEO SYSTEM
+--------------------------- */
+const rickrollUrl = 'https://www.youtube-nocookie.com/embed/oHg5SJYRHA0';
+const startBtn = document.getElementById('start-btn');
+const skipBtn = document.getElementById('skip-btn');
+const videoContainer = document.getElementById('video-container');
+const videoWrap = document.getElementById('video-wrap');
+const actionArea = document.getElementById('action-area');
+const reset = document.getElementById('reset');
+
+function showVideo(autoplay){
+  actionArea.style.display = 'none';
+  videoContainer.style.display = '';
+  const src = `${rickrollUrl}?rel=0&modestbranding=1&playsinline=1${autoplay ? '&autoplay=1' : ''}`;
+  videoWrap.innerHTML = `<iframe src="${src}" title="Rickroll" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+}
+
+
+/* ---------------------------
+    LEO CHI CAPTCHA
+   (Pick images WITHOUT Leo)
+--------------------------- */
+const captchaOverlay = document.getElementById("captcha-overlay");
+const captchaBox = document.getElementById("captcha-box");
+const captchaGrid = document.getElementById("captcha-grid");
+const captchaSubmit = document.getElementById("captcha-submit");
+const captchaStatus = document.getElementById("captcha-status");
+const captchaBar = document.getElementById("captcha-bar");
+
+// Images without Leo (correct choices)
+const noLeoImages = [
+  "https://i.postimg.cc/tsxnDt0N/ab6761610000e5eb019782a5d4654e00db2a28a0.jpg",
+  "https://i.postimg.cc/vgqmGcRJ/gettyimages-527191268-copy.avif",
+  "https://i.postimg.cc/bZJ3v5tD/image-2025-11-14-155832153.png",
+  "https://i.postimg.cc/vDYPjDZY/image-2025-11-14-155939654.png"
+];
+
+// Images that contain Leo (decoys)
+const leoImages = [
+  "https://i.postimg.cc/4KGv9FKd/1645673056015.jpg",
+  "https://i.postimg.cc/kBzPqW2z/image-2025-11-14-160355902.png",
+  "https://i.postimg.cc/mktkSyQz/image-2025-11-14-160204163.png",
+  "https://i.postimg.cc/LJ2hBdT9/1596845024063.jpg",
+  "https://i.postimg.cc/sGJxbwj0/image-2025-11-14-160643988.png"
+];
+
+// (Optional) wrong-answer sound (may fail silently if blocked)
+const wrongSound = new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg");
+
+// Fisher–Yates shuffle helper
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function buildCaptcha(){
+  captchaGrid.innerHTML = "";
+  captchaStatus.style.display = "none";
+  captchaBar.style.width = "0%";
+  captchaSubmit.disabled = false;
+  captchaSubmit.textContent = "Verify";
+
+  // Always use all 4 no-Leo images
+  const chosenNoLeo = [...noLeoImages];
+
+  // Randomly pick 5 Leo images
+  const leoShuffled = shuffle([...leoImages]);
+  const chosenLeo = leoShuffled.slice(0, 5);
+
+  // Combine and shuffle for grid
+  const combined = shuffle(
+    chosenNoLeo.map(src => ({ src, isNoLeo: true }))
+      .concat(chosenLeo.map(src => ({ src, isNoLeo: false })))
+  );
+
+  combined.forEach(item => {
+    const img = document.createElement("img");
+    img.src = item.src;
+    img.className = "captcha-img";
+    img.dataset.isNoLeo = item.isNoLeo ? "true" : "false";
+    img.onclick = () => img.classList.toggle("selected");
+    captchaGrid.appendChild(img);
+  });
+}
+
+function showCaptcha(){
+  buildCaptcha();
+  captchaOverlay.style.display = "flex";
+}
+
+function startFakeVerifyBar(callback){
+  captchaStatus.style.display = "block";
+  captchaBar.style.width = "0%";
+  let progress = 0;
+  const interval = setInterval(()=>{
+    progress += 25;
+    if(progress >= 100){
+      progress = 100;
+      clearInterval(interval);
+      callback();
+    }
+    captchaBar.style.width = progress + "%";
+  }, 120);
+}
+
+captchaSubmit.onclick = () => {
+  // disable while verifying
+  captchaSubmit.disabled = true;
+  captchaSubmit.textContent = "Verifying...";
+
+  startFakeVerifyBar(() => {
+    const images = [...document.querySelectorAll(".captcha-img")];
+
+    let allGood = true;
+    let anySelected = false;
+
+    images.forEach(img => {
+      const isNoLeo = img.dataset.isNoLeo === "true";
+      const isSelected = img.classList.contains("selected");
+
+      if (isNoLeo && !isSelected) {
+        allGood = false;
+      }
+      if (!isNoLeo && isSelected) {
+        allGood = false;
+      }
+      if (isSelected) anySelected = true;
+    });
+
+    if (allGood && anySelected) {
+      captchaOverlay.style.display = "none";
+      showVideo(true); // success → rickroll
+    } else {
+      // wrong answer
+      captchaSubmit.disabled = false;
+      captchaSubmit.textContent = "Verify";
+      captchaBar.style.width = "0%";
+      captchaStatus.style.display = "none";
+
+      captchaBox.classList.add("shake");
+      setTimeout(() => captchaBox.classList.remove("shake"), 500);
+
+      // try to play a funny error sound (if allowed)
+      if (wrongSound && wrongSound.play) {
+        wrongSound.play().catch(()=>{});
+      }
+    }
+  });
+};
+
+
+/* ---------------------------
+    BUTTON HOOKS
+--------------------------- */
+startBtn.addEventListener('click', () => {
+  startBtn.disabled = true;
+  startBtn.textContent = 'Preparing...';
+
+  setTimeout(() => {
+    showCaptcha(); // show Leo Chi CAPTCHA first
+  }, 600);
+});
+
+skipBtn.addEventListener('click', () => showVideo(false));
+
+reset.addEventListener('click', () => {
+  videoWrap.innerHTML = '';
+  videoContainer.style.display = 'none';
+  actionArea.style.display = '';
+  startBtn.disabled = false;
+  startBtn.textContent = 'Continue to Download';
+});
+
+startBtn.focus();
+
+
+/* ---------------------------
+    AUTO-RICKROLL REDIRECT
+--------------------------- */
+let redirectTimer = setTimeout(() => {
+  if (videoContainer.style.display === 'none') {
+    window.location.href = 'https://www.youtube.com/watch?v=oHg5SJYRHA0';
+  }
+}, 8000);
+
+['click','keydown','mousemove','touchstart'].forEach(evt =>
+  document.addEventListener(evt, () => clearTimeout(redirectTimer), {once:true})
+);
+</script>
+
+</body>
+</html>
